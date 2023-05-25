@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def plot_my(dataframe):
+def infection_plt(dataframe):
     # Сортируем датафрейм по странам и датам
     dataframe = dataframe.sort_values(['Регион', 'Дата'])
     
@@ -39,6 +39,3 @@ def plot_my(dataframe):
     
     # Отображаем график
     plt.show()
-
-dataframe = pd.read_excel('my_date.xlsx')
-plot_my(dataframe)
