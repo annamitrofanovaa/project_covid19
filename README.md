@@ -1,13 +1,17 @@
 # project_covid19
-Митрофанова, Пронина, Альжапарова
+Выполняли: Митрофанова Анна (21.Б11), Пронина Надежда (21.Б13), Альжапарова Альбина (21.Б13)
 
 ## План действий:
 ### preparing_file.py
 Программа, которая фильтрует данные.
-1. Скачали данные из https://datalens.yandex.ru/marketplace/f2eb8io5l5q4rp84feo1
+1. Скачали данные из https://datalens.yandex.ru/marketplace/f2eb8io5l5q4rp84feo1 в файл Russia.xlsx
 2.  Выбираем регионы: Оренбург, Бурятия, Крым, Москва, СПб, Ростов
 3.  Сортировка по дате
 4.  Сохранение  обновленных данных в файл russian_data.xlsx (далее работа с ним)
+
+### name_file.py
+Программа, в которой реализованы все основные моменты из задания
+
 
 ## Задание
 Дано: данные в открытом доступе (например, https://github.com/GoogleCloudPlatform/covid-19-open-data/blob/main/docs/table-epidemiology.md - о динамике новых случаев, числа смертей и https://github.com/GoogleCloudPlatform/covid-19-open-data/blob/main/docs/table-vaccinations.md - о вакцинации.. или же)
