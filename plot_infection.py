@@ -13,23 +13,23 @@ def plot_my(dataframe):
         # Получаем название страны, дату и население
         country = row['Регион']
         date = row['Дата']
-        population = row['Заражений за день']
+        zaraza = row['Заражений за день']
         
         # Если страна еще не добавлена в словарь, создаем для нее новый список
         if country not in country_data:
-            country_data[country] = [[population, date]]
+            country_data[country] = [[zaraza, date]]
         else:
             # Иначе добавляем данные в список для данной страны
-            country_data[country].append([population, date])
+            country_data[country].append([zaraza, date])
     
     # Создаем график для каждой страны
     for country, data in country_data.items():
         # Получаем даты и население для данной страны
         dates = [row[1] for row in data]
-        populations = [row[0] for row in data]
+        zarazas = [row[0] for row in data]
         
         # Строим график
-        plt.plot(dates, populations, label=country)
+        plt.plot(dates, zarazas, label=country)
     
     # Добавляем легенду и метки осей
     plt.legend()
