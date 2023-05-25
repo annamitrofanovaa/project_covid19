@@ -1,5 +1,6 @@
 # project_covid19
 Митрофанова, Пронина, Альжапарова
+
 Дано: данные в открытом доступе (например, https://github.com/GoogleCloudPlatform/covid-19-open-data/blob/main/docs/table-epidemiology.md - о динамике новых случаев, числа смертей и https://github.com/GoogleCloudPlatform/covid-19-open-data/blob/main/docs/table-vaccinations.md - о вакцинации.. или же)
 
 или же вот отсюда можно:
