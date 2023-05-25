@@ -1,6 +1,11 @@
 # project_covid19
 Митрофанова, Пронина, Альжапарова
 
+## План действий:
+
+1. Выбираем регионы: Оренбург, Бурятия, Крым, Москва, СПб, Ростов
+
+## Задание
 Дано: данные в открытом доступе (например, https://github.com/GoogleCloudPlatform/covid-19-open-data/blob/main/docs/table-epidemiology.md - о динамике новых случаев, числа смертей и https://github.com/GoogleCloudPlatform/covid-19-open-data/blob/main/docs/table-vaccinations.md - о вакцинации.. или же)
 
 или же вот отсюда можно:
