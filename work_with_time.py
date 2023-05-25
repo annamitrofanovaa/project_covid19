@@ -21,4 +21,4 @@ df = df[(df['Дата'] >= start_date) & (df['Дата'] <= end_date)]
 df['Дата'] = df['Дата'].dt.date
 
 # Вывод результата
-df.to_excel('russian_datatime1.xlsx', index=False)
+df.to_excel('choosen_data.xlsx', index=False)
