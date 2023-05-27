@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def infection_plt(dataframe):
+def infection_plt(dataframe, what_to_do, chart_name):
     # Сортируем датафрейм по странам и датам
     dataframe = dataframe.sort_values(['Регион', 'Дата'])
     
@@ -13,7 +13,8 @@ def infection_plt(dataframe):
         # Получаем название страны, дату и население
         country = row['Регион']
         date = row['Дата']
-        zaraza = row['Заражений за день']
+        #zaraza = row['Заражений за день']
+        zaraza = row[what_to_do]
         
         # Если страна еще не добавлена в словарь, создаем для нее новый список
         if country not in country_data:
@@ -35,7 +36,7 @@ def infection_plt(dataframe):
     plt.legend()
     plt.xlabel('Дата')
     plt.xticks(rotation=45)
-    plt.ylabel('Всего заражений')
+    plt.ylabel(chart_name)
     
     # Отображаем график
     plt.show()
