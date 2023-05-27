@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from infection_plot import infection_plt
+from plot_for_region import plt_for_region
 
 # Загрузка данных из файла
 df = pd.read_excel('russian_data.xlsx')
@@ -26,6 +27,9 @@ df = df[(df['Дата'] >= start_date) & (df['Дата'] <= end_date)]
 #выводим графики
 what_to_do = "Заражений за день" #или "Смертей" или "Выздоровлений за день" или .......
 chart_name = "Количество заражений" #или "Количество смертей" или "Количество выздоровлений" или.....
-infection_plt(df, what_to_do, chart_name)
+###infection_plt(df, what_to_do, chart_name)
 #для всех дат
-infection_plt(df_all_time, what_to_do, chart_name)
+###infection_plt(df_all_time, what_to_do, chart_name)
+
+#посмотреть данные для одного региона
+plt_for_region("Бурятия", df)
