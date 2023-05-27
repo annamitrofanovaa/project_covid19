@@ -15,6 +15,9 @@
 ### infection_plot.py
 Функция, которая строит графики
 
+### check_is_weekend
+Функция, которая проверяет действительно ли количество зараженных в день зависит от дня недели (будни или выходные)
+
 ## Задание
 Дано: данные в открытом доступе (например, https://github.com/GoogleCloudPlatform/covid-19-open-data/blob/main/docs/table-epidemiology.md - о динамике новых случаев, числа смертей и https://github.com/GoogleCloudPlatform/covid-19-open-data/blob/main/docs/table-vaccinations.md - о вакцинации.. или же)
 или же вот отсюда можно:
