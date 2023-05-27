@@ -1,7 +1,7 @@
 # project_covid19
 Выполняли: Митрофанова Анна (21.Б11), Пронина Надежда (21.Б13), Альжапарова Альбина (21.Б13)
 
-## План действий:
+## План действий и описания программ:
 ### preparing_file.py
 Программа, которая фильтрует данные.
 1. Скачали данные из https://datalens.yandex.ru/marketplace/f2eb8io5l5q4rp84feo1 в файл Russia.xlsx
@@ -9,9 +9,11 @@
 3.  Сортировка по дате
 4.  Сохранение  обновленных данных в файл russian_data.xlsx (далее работа с ним)
 
-### name_file.py
+### main.py
 Программа, в которой реализованы все основные моменты из задания
 
+### infection_plot.py
+Функция, которая строит графики
 
 ## Задание
 Дано: данные в открытом доступе (например, https://github.com/GoogleCloudPlatform/covid-19-open-data/blob/main/docs/table-epidemiology.md - о динамике новых случаев, числа смертей и https://github.com/GoogleCloudPlatform/covid-19-open-data/blob/main/docs/table-vaccinations.md - о вакцинации.. или же)
