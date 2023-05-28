@@ -15,12 +15,12 @@ def hypothesis(df, city, what_to_do):
     idx += 1
   yn = dataframe[dataframe['Дата'] == date_end].iloc[0][action]
   y_sv = dataframe[dataframe['Дата'] == start_vaccination].iloc[0][action]
-  print('показания', action, 'с начала до начала вакцинации')
+  print('показания "', action, '" с начала до начала вакцинации')
   t = (y_sv/y1)**(1/(dataframe.shape[0] - 1))*100
   print('средний темп прироста:')
   k1 = t - 100
   print(k1, '%')
-  print('показания', action, 'с начала вакцинации до конца')
+  print('показания "', action, '" с начала вакцинации до конца')
   t = (yn/y_sv)**(1/(dataframe.shape[0] - 1))*100
   print('средний темп прироста:')
   k2 = t - 100
