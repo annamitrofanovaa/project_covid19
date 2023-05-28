@@ -1,4 +1,5 @@
 from datetime import datetime
+import pandas as pd
 
 def check_is_weekend(df, city):
   dataframe = df[df['Регион'] == city]
