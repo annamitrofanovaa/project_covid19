@@ -3,7 +3,15 @@ import pandas as pd
 
 def hypothesis(df, city, what_to_do):
   start_vaccination = pd.to_datetime('2020.12.02', format='%Y.%m.%d')
+  #start_vaccination = pd.to_datetime('2021.11.19', format='%Y.%m.%d')
   dataframe = df[df['Регион'] == city]
+  data = dataframe['Дата']
+  zaraza = dataframe[what_to_do]
+  plt.plot(data, zaraza)
+  plt.xlabel('Дата')
+  plt.xticks(rotation=45)
+  plt.ylabel(what_to_do)
+  plt.show()
   date_start = dataframe.iloc[0]['Дата']
   date_end = dataframe.iloc[dataframe.shape[0] - 1]['Дата']
   y1 = dataframe[dataframe['Дата'] == date_start].iloc[0][action]
@@ -25,7 +33,6 @@ def hypothesis(df, city, what_to_do):
   print('средний темп прироста:')
   k2 = t - 100
   print(k2, '%')
-
   if (k2 <= 0):
     print('Гипотеза верна')
   else:

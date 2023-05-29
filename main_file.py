@@ -1,18 +1,19 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from infection_plot import infection_plt
-from plot_for_region import plt_for_region
+#from plot_for_region import plt_for_region
 from seasons import season_statistic
 from hypothesis import hypothesis
 from dinamics import dinamics
 from check_is_weekend import check_is_weekend
-from an_dynamic import reg_dynamic
+from pirson_dinamic import reg_dynamic
 from test_vaccine import *
+from all_reg_plot import all_region_plt
 
 df = pd.read_excel('russian_data.xlsx')
 df['Дата'] = pd.to_datetime(df['Дата'], format='%Y.%m.%d')
 df_all_time = df #ПЕРЕМЕННАЯ АЛЬБИНЫ НЕ ТРОГАТЬ!!
-
+#all_region_plt(df)
 print("Что вы хотите сделать?")
 choice = input("1. Вывести данные за всё время\n2. Вывести данные за определенный период\n")
 if choice=="2":
@@ -121,6 +122,12 @@ while True:
         print('Всего дней с нулевым количеством заражений в данном регионе:', cnt1)
         print('Сколько из таких дней - выходные:', cnt2)
         print('Сколько было понедельников тахих, что на выходных было 0 заражений:', cnt3)
+        labels = 'Нулевое кол-во заражений', 'Выходные', 'Понедельники с нулевыми выходными'
+        sizes = [cnt1, cnt2, cnt3]
+        fig1, ax1 = plt.subplots()
+        ax1.pie(sizes, labels=labels)
+        ax1.axis('equal')  
+        plt.show()
     if choice =="7":
         print('Выберите регион: ')
         what = input('1. Москва \n2. Санкт-Петербург\n3. Крым \n4. Оренбургская область \n5. Бурятия \n6. Ростовская область\n')
