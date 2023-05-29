@@ -1,12 +1,12 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from infection_plot import infection_plt
-from plot_for_region import plt_for_region
+#from plot_for_region import plt_for_region
 from seasons import season_statistic
 from hypothesis import hypothesis
 from dinamics import dinamics
 from check_is_weekend import check_is_weekend
-from an_dynamic import reg_dynamic
+from pirson_dinamic import reg_dynamic
 from test_vaccine import draw_vaccination_pie_chart
 from all_reg_plot import all_region_plt
 

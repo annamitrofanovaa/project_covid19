@@ -24,14 +24,12 @@ def reg_dynamic(data, region):
     corr = np.corrcoef(region_data['Заражений'], region_data['Смертей'])[0, 1]
     print('Коэффициент корреляции Пирсона между числом зарегистрированных случаев и числом смертей:', corr)
     
-    # преобразование даты к формату "месяц-год"
     region_data['дата'] = pd.to_datetime(region_data['Дата']).dt.strftime('%mY')
     
     # расчет динамики выбывания
     region_data['recovery_rate'] = (region_data['Выздоровлений'] / region_data['Заражений']) * 100
     region_data['mortality_rate'] = (region_data['Смертей'] / region_data['Заражений']) * 100
     
-    # расчет среднего значения динамики выбывания
     reg_data = region_data.groupby('Дата')[['recovery_rate', 'mortality_rate']].mean().reset_index()
     
     plt.plot(reg_data['Дата'], reg_data['recovery_rate'], label='Динамика выбывания выздоровлений')
