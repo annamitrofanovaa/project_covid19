@@ -7,6 +7,7 @@ import numpy as np
 
 def reg_dynamic(data, region):
     region_data = data[data['Регион'] == region]
+    dd=region_data
     fig, ax = plt.subplots()
     ax.plot(region_data['Дата'], region_data['Заражений'], label='Заражений')
     ax.plot(region_data['Дата'], region_data['Смертей'], label='Смертей')
@@ -18,25 +19,25 @@ def reg_dynamic(data, region):
     plt.show()
 
     # вычисление коэффициента корреляции Пирсона между числом зарегистрированных случаев и числом выздоровевших/умерших
-    corr = np.corrcoef(data['Заражений'], data['Выздоровлений'])[0, 1]
+    corr = np.corrcoef(region_data['Заражений'], region_data['Выздоровлений'])[0, 1]
     print('Коэффициент корреляции Пирсона между числом зарегистрированных случаев и числом выздоровлений:', corr)
 
-    corr = np.corrcoef(data['Заражений'], data['Смертей'])[0, 1]
+    corr = np.corrcoef(region_data['Заражений'], region_data['Смертей'])[0, 1]
     print('Коэффициент корреляции Пирсона между числом зарегистрированных случаев и числом смертей:', corr)
     
     # преобразование даты к формату "месяц-год"
-    data['дата'] = pd.to_datetime(data['Дата']).dt.strftime('%mY')
+    region_data['дата'] = pd.to_datetime(region_data['Дата']).dt.strftime('%mY')
     
     # расчет динамики выбывания
-    data['recovery_rate'] = (data['Выздоровлений'] / data['Заражений']) * 100
-    data['mortality_rate'] = (data['Смертей'] / data['Заражений']) * 100
+    region_data['recovery_rate'] = (region_data['Выздоровлений'] / region_data['Заражений']) * 100
+    region_data['mortality_rate'] = (region_data['Смертей'] / region_data['Заражений']) * 100
     
     # группировка данных по месяцам и расчет среднего значения динамики выбывания
-    data = data.groupby('Дата')[['recovery_rate', 'mortality_rate']].mean().reset_index()
+    reg_data = region_data.groupby('Дата')[['recovery_rate', 'mortality_rate']].mean().reset_index()
     
     # визуализация результатов
-    plt.plot(data['Дата'], data['recovery_rate'], label='Динамика выбывания выздоровлений')
-    plt.plot(data['Дата'], data['mortality_rate'], label='Динамика выбывания смертности')
+    plt.plot(reg_data['Дата'], reg_data['recovery_rate'], label='Динамика выбывания выздоровлений')
+    plt.plot(reg_data['Дата'], reg_data['mortality_rate'], label='Динамика выбывания смертности')
    
     plt.xlabel('Месяц')
     plt.ylabel('Динамика выбывания, %')
