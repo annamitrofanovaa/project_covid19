@@ -1,43 +1,3 @@
-# import pandas as pd
-# import numpy as np
-# import matplotlib.pyplot as plt
-
-# def estimate_wave_duration(df, region):
-#     region_data = df[df['Регион'] == region].copy()
-
-#     dates = region_data['Дата'].values
-#     cases = region_data['Заражений за день'].values
-
-#     # Вычисляем пороговое значение для определения начала и конца волны
-#     threshold = 0.09
-#     threshold_value = cases.max() * (1 - threshold)
-
-#     # Находим индексы, где происходит переход через пороговое значение
-#     crossings = np.where(np.diff(np.sign(cases - threshold_value)))[0]
-#     # print(crossings)
-#     if len(crossings) >= 2:
-#         # Извлекаем индексы начала и конца волны
-#         wave_start = crossings[0]
-#         wave_end = crossings[-1]
-
-#         wave_period = region_data.iloc[wave_start:wave_end+1]['Дата']
-#         decline_period = region_data.iloc[wave_end:]['Дата']
-
-
-#         plt.plot(region_data['Дата'], region_data['Заражений за день'], color='blue', label='Заражений за день')
-#         plt.plot(region_data.iloc[wave_start:wave_end+1]['Дата'], region_data.iloc[wave_start:wave_end+1]['Заражений за день'], color='green', label='Период роста')
-#         plt.plot(region_data.iloc[wave_end:]['Дата'], region_data.iloc[wave_end:]['Заражений за день'], color='red', label='Период спада')
-#         plt.xlabel('Дата')
-#         plt.ylabel('Заражений за день')
-#         plt.title('Анализ волны заболеваемости')
-#         plt.legend()
-#         plt.show()
-
-
-#         return wave_period, decline_period
-#     else:
-#         return None, None
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -48,101 +8,79 @@ def estimate_wave_duration(df, region):
     dates = region_data['Дата'].values
     cases = region_data['Заражений за день'].values
 
-    # Вычисляем пороговое значение для определения начала и конца волны
-    threshold = 0.09
-    threshold_value = cases.max() * (1 - threshold)
+    # print("cases = ")
+    # print(cases)
+    
+    rises = []  # список для длительности подъемов
+    falls = []  # список для длительности спадов
+    rise_values = []  # список значений в каждом подъеме
+    fall_values = []  # список значений в каждом спаде
 
-    # Находим индексы, где происходит переход через пороговое значение
-    crossings = np.where(np.diff(np.sign(cases - threshold_value)))[0]
+    current_wave = []  # текущая волна (подъем или спад)
+    current_trend = None  # текущий тренд: 'rise' (подъем) или 'fall' (спад)
 
-    if len(crossings) >= 2:
-        wave_periods = []
-        decline_periods = []
+    for i in range(1, len(cases)):
+        if cases[i] <= cases[i-1]:  
+            if current_trend != 'rise':  # Если тренд изменился, сохраняем предыдущую волну и начинаем новую
+                if current_wave:
+                    rises.append(len(current_wave))
+                    rise_values.append(current_wave)
+                current_wave = [cases[i-1], cases[i]]
+                current_trend = 'rise'
+            else:  # Продолжаем текущую волну
+                current_wave.append(cases[i])
+        else:   
+            if current_trend != 'fall':   # Если тренд изменился, сохраняем предыдущую волну и начинаем новую
+                if current_wave:
+                    falls.append(len(current_wave))
+                    fall_values.append(current_wave)
+                current_wave = [cases[i-1], cases[i]]
+                current_trend = 'fall'
+            else:  # Продолжаем текущую волну
+                current_wave.append(cases[i])
 
-        for i in range(len(crossings) - 1):
-            wave_start = crossings[i]
-            wave_end = crossings[i + 1]
+    # Добавляем последнюю волну в соответствующий список
+    if current_wave:
+        if current_trend == 'rise':
+            rises.append(len(current_wave))
+            rise_values.append(current_wave)
+        else:
+            falls.append(len(current_wave))
+            fall_values.append(current_wave)
+    
 
-            decline_start = wave_end
-            if i < len(crossings) - 2:
-                decline_end = crossings[i + 2]
-            else:
-                decline_end = len(cases) - 1
+    # Выводим длительности подъемов и спадов    
+    print("Длительность подъемов (в днях):", rises)
+    print("Длительность спадов (в днях):", falls)
 
-            wave_periods.append(region_data.iloc[wave_start:wave_end + 1]['Дата'])
-            decline_periods.append(region_data.iloc[decline_start:decline_end + 1]['Дата'])
+    print("Значения в подъемах:")
+    for i, values in enumerate(rise_values):
+        print("Подъем", i+1, ":", values)
 
-        plt.plot(region_data['Дата'], region_data['Заражений за день'], color='blue', label='Заражений за день')
+    print("Значения в спадах:")
+    for i, values in enumerate(fall_values):
+        print("Спад", i+1, ":", values)
 
-        for i, wave_period in enumerate(wave_periods):
-            decline_period = decline_periods[i]
+    # Строим график
+    plt.plot(region_data['Дата'],cases)
+    
+    # Отображаем волны
+    # for i, wave in enumerate(rise_values):
+    #     x_wave = np.arange(len(wave))
+    #     x_offset = np.sum(rises[:i])  # Смещение для горизонтальной оси
+    #     plt.plot(x_wave + x_offset, wave, color='blue')
 
-            plt.plot(wave_period, region_data.loc[wave_period.index, 'Заражений за день'], color='green', label=f'Волна {i + 1}')
-            plt.plot(decline_period, region_data.loc[decline_period.index, 'Заражений за день'], linestyle='--', linewidth=2, label=f'Спад {i + 1}')
+    # for i, wave in enumerate(fall_values):
+    #     x_wave = np.arange(len(wave))
+    #     x_offset = np.sum(rises[:len(rise_values)]) + np.sum(falls[:i])  # Смещение для горизонтальной оси
+    #     plt.plot(x_wave + x_offset, wave, color='blue')
 
-            if i > 0:
-                prev_wave_period = wave_periods[i - 1]
-                prev_decline_period = decline_periods[i - 1]
-                plt.plot(prev_decline_period, region_data.loc[prev_decline_period.index, 'Заражений за день'], linestyle='--', linewidth=2, label=f'Спад {i}')
-            
-        plt.xlabel('Дата')
-        plt.ylabel('Заражений за день')
-        plt.title('Анализ волны заболеваемости')
-        plt.legend()
-        plt.show()
+    plt.title(f'Длительность волн для региона: {region}')
+    plt.xlabel('Дни')
+    plt.ylabel('Значение')
+    plt.xticks(rotation = 45)
 
-        return wave_periods, decline_periods
-    else:
-        return None, None
+    table_text = f'Rises: {rises}\nFalls: {falls}'
+    plt.text(0.75, 0.95, table_text, transform=plt.gca().transAxes, fontsize=10, va='top')
 
-
-# import pandas as pd
-# import numpy as np
-# import matplotlib.pyplot as plt
-
-# def estimate_wave_duration(df, region):
-#     region_data = df[df['Регион'] == region].copy()
-
-#     dates = region_data['Дата'].values
-#     cases = region_data['Заражений за день'].values
-
-#     # Вычисляем пороговое значение для определения начала и конца волны
-#     threshold = 0.05
-#     threshold_value = cases.max() * (1 - threshold)
-
-#     wave_periods = []
-#     decline_periods = []
-#     wave_start = 0
-
-#     for i in range(1, len(cases)):
-#         if cases[i] > cases[i - 1]:
-#             if i - wave_start >= 2:
-#                 wave_periods.append(region_data.iloc[wave_start:i]['Дата'])
-
-#         elif cases[i] < cases[i - 1]:
-#             if cases[i - 1] > threshold_value and i - wave_start >= 2:
-#                 decline_periods.append(region_data.iloc[wave_start:i]['Дата'])
-#                 wave_start = i
-
-#     if wave_start < len(cases) - 1 and len(cases) - wave_start >= 2:
-#         wave_periods.append(region_data.iloc[wave_start:len(cases)]['Дата'])
-
-#     plt.plot(region_data['Дата'], region_data['Заражений за день'], color='blue', label='Заражений за день')
-
-#     for i, wave_period in enumerate(wave_periods):
-#         decline_period = decline_periods[i] if i < len(decline_periods) else None
-
-#         plt.plot(wave_period, region_data.loc[wave_period.index, 'Заражений за день'], label=f'Волна {i+1}')
-        
-#         if decline_period is not None:
-#             plt.plot(decline_period, region_data.loc[decline_period.index, 'Заражений за день'], linestyle='--', linewidth=2, label=f'Спад {i + 1}')
-
-#     plt.xlabel('Дата')
-#     plt.ylabel('Заражений за день')
-#     plt.title('Анализ волны заболеваемости')
-#     plt.legend()
-#     plt.show()
-
-#     return wave_periods, decline_periods
-
-
+    plt.show()

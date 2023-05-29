@@ -1,9 +1,11 @@
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 from infection_plot import infection_plt
 #from plot_for_region import plt_for_region
 from seasons import season_statistic
 from hypothesis import hypothesis
+from wave_duration import estimate_wave_duration
 from dinamics import dinamics
 from check_is_weekend import check_is_weekend
 from pirson_dinamic import reg_dynamic
@@ -100,8 +102,21 @@ while True:
         end_date = pd.to_datetime(end_date, format='%Y.%m.%d')
         dinamics(df_all_time, city, start_date, end_date, action)
     if choice == "5":
-        A=1
-        #NADYAA
+        print('Выберите регион: ')
+        what = input('1. Москва \n2. Санкт-Петербург\n3. Крым \n4. Оренбургская область \n5. Бурятия \n6. Ростовская область\n')
+        if what == '1':
+          city = "Москва"
+        if what == '2':
+          city = 'Санкт-Петербург'
+        if what == '3':
+          city = 'Крым'
+        if what == '4':
+          city = 'Оренбургская обл.'
+        if what == '5':
+          city = 'Бурятия'
+        if what == '6':
+          city = 'Ростовская обл.'
+        estimate_wave_duration(df, city)
     if choice == "6":
         print('Выберите регион: ')
         what = input('1. Москва \n2. Санкт-Петербург\n3. Крым \n4. Оренбургская область \n5. Бурятия \n6. Ростовская область\n')
