@@ -7,7 +7,7 @@ from hypothesis import hypothesis
 from dinamics import dinamics
 from check_is_weekend import check_is_weekend
 from an_dynamic import reg_dynamic
-from test_vaccine import draw_vaccination_pie_chart
+from test_vaccine import *
 
 df = pd.read_excel('russian_data.xlsx')
 df['Дата'] = pd.to_datetime(df['Дата'], format='%Y.%m.%d')
@@ -28,7 +28,7 @@ while True:
     print("Что вы хотите сделать?")
     choice = input("1. Вывести график (далее выбрать какой)\n2. Вывести статистику по временам года\n3. Проверить гипотезу \n4. Вывести динамику новых случаев для разных регионов в абсолютных значениях и в %\n5. Длина волны для регионов\n6. Проверить насколько часто встречалось такое, что на выходных 0 новых случаев\n7. Анализ динамики выбывания   \n8. Выход\n")
     if choice=="1":
-        what = input("1. Количество зараженных \n2. Количество смертей  \n3.Количество выздоровлений \n4. Процент вакцинированных от общего нас. региона\n")
+        what = input("1. Количество зараженных \n2. Количество смертей  \n3. Количество выздоровлений \n4. Процент вакцинированных от общего нас. региона \n5. Кол-во привитых и полностью привитых в регионах\n")
         if what=="1":
             what_to_do = "Заражений за день" 
             chart_name = "Количество заражений"
@@ -43,6 +43,8 @@ while True:
             infection_plt(df, what_to_do, chart_name)
         if what == "4":
             draw_vaccination_pie_chart()
+        if what == "5":
+            draw_relation_fully_not_fully()
     if choice == "2":
         #в какой сезон чаще заражались?
         season_statistic(df)
