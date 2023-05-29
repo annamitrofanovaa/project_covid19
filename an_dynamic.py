@@ -18,7 +18,6 @@ def reg_dynamic(data, region):
     ax.legend()
     plt.show()
 
-    # вычисление коэффициента корреляции Пирсона между числом зарегистрированных случаев и числом выздоровевших/умерших
     corr = np.corrcoef(region_data['Заражений'], region_data['Выздоровлений'])[0, 1]
     print('Коэффициент корреляции Пирсона между числом зарегистрированных случаев и числом выздоровлений:', corr)
 
@@ -32,14 +31,14 @@ def reg_dynamic(data, region):
     region_data['recovery_rate'] = (region_data['Выздоровлений'] / region_data['Заражений']) * 100
     region_data['mortality_rate'] = (region_data['Смертей'] / region_data['Заражений']) * 100
     
-    # группировка данных по месяцам и расчет среднего значения динамики выбывания
+    # расчет среднего значения динамики выбывания
     reg_data = region_data.groupby('Дата')[['recovery_rate', 'mortality_rate']].mean().reset_index()
     
-    # визуализация результатов
     plt.plot(reg_data['Дата'], reg_data['recovery_rate'], label='Динамика выбывания выздоровлений')
     plt.plot(reg_data['Дата'], reg_data['mortality_rate'], label='Динамика выбывания смертности')
    
     plt.xlabel('Месяц')
     plt.ylabel('Динамика выбывания, %')
     plt.title('Динамика выбывания(смертности и выздоровлений) по месяцам')
+    plt.legend()
     plt.show()
