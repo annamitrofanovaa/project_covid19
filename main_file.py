@@ -19,10 +19,9 @@ choice = input("1. Вывести данные за всё время\n2. Выв
 if choice=="2":
     start_date = input('Введите начальную дату (ГГГГ.ММ.ДД): ')
     end_date = input('Введите конечную дату (ГГГГ.ММ.ДД): ')
-    # Преобразование введенных дат в тип datetime
+    # в тип datetime
     start_date = pd.to_datetime(start_date, format='%Y.%m.%d')
     end_date = pd.to_datetime(end_date, format='%Y.%m.%d')
-    # Оставляем только строки, значение в "Дата" которых входит в заданный промежуток
     df = df[(df['Дата'] >= start_date) & (df['Дата'] <= end_date)]
 
 while True:
