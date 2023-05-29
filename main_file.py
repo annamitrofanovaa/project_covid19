@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from infection_plot import infection_plt
 from plot_for_region import plt_for_region
 from seasons import season_statistic
+from wave_duration import *
 
 df = pd.read_excel('russian_data.xlsx')
 df['Дата'] = pd.to_datetime(df['Дата'], format='%Y.%m.%d')
@@ -47,7 +48,8 @@ while True:
         #albinananan
     if choice == "5":
         A=1
-        #NADYAA
+        region = 'Ростовская обл.'
+        wave_periods, decline_periods = estimate_wave_duration(df, region)
     if choice == "6":
         break
         
